@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "RecipeKart-Ai",
+    "name": "YogaMate",
     "slug": "RecipeKart-Ai",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo1.png",
+    "icon": "./assets/images/22j.png",
     "scheme": "recipekartai",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -14,7 +14,7 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "backgroundImage": "./assets/images/logo1.png"
+        "backgroundImage": "./assets/images/22j.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -22,14 +22,14 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/logo1.png"
+      "favicon": "./assets/images/22j.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/logo1.png",
+          "image": "./assets/images/22j.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
@@ -37,7 +37,9 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,
@@ -46,7 +48,8 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "fb824b2b-cdec-4901-a94a-b7b397fd2df9"
+        "projectId": "fb824b2b-cdec-4901-a94a-b7b397fd2df9",
+        "clerkPublishableKey": "pk_test_bWFqb3ItYXNwLTQ5LmNsZXJrLmFjY291bnRzLmRldiQ"
       }
     },
     "owner": "shubhammmm"

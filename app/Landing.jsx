@@ -1,29 +1,66 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from "react-native-safe-area-context";
 import {Marquee} from '@animatereactnative/marquee'
 import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import Colors from '@/services/Colors';
 import { Redirect, router } from 'expo-router';
+import { ClerkProvider, SignedIn, SignedOut, useOAuth } from "@clerk/clerk-expo";
+import { useAuth } from "@clerk/clerk-expo";
+import * as Linking from "expo-linking";
+import { AntDesign } from '@expo/vector-icons';
 
-const Landing = () => {
+const clerkKey = "pk_test_bWFqb3ItYXNwLTQ5LmNsZXJrLmFjY291bnRzLmRldiQ";
+
+export default function Landing() {
+    return (
+        <Main/>
+    );
+}
+
+const Main = () => {
     const imageList = [
-        require('./../assets/images/1.jpg'),
-        require('./../assets/images/c1.jpg'),
-        require('./../assets/images/2.jpg'),
-        require('./../assets/images/c2.jpg'),
-        require('./../assets/images/3.jpg'),
-        require('./../assets/images/6.jpg'),
-        require('./../assets/images/4.jpg'),
-        require('./../assets/images/c3.jpg'),
-        require('./../assets/images/5.jpg'),
+        require('./../assets/images/1j.png'),
+        require('./../assets/images/c1j.png'),
+        require('./../assets/images/2j.png'),
+        require('./../assets/images/c2j.png'),
+        require('./../assets/images/3j.png'),
+        require('./../assets/images/6j.png'),
+        require('./../assets/images/4j.png'),
+        require('./../assets/images/c3j.png'),
+        require('./../assets/images/5j.png'),
     ]
+    const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
+    const { isLoaded, signOut } = useAuth();
+    
+    const signInWithGoogle = async () => {
+        try {
+        const { createdSessionId, setActive } = await startOAuthFlow({
+            redirectUrl: Linking.createURL("/Home", { scheme: "recipekartai" }),
+        });
+
+        if (createdSessionId) {
+            await setActive?.({ session: createdSessionId });
+            // alert("✅ Logged in successfully!");
+        }
+        }catch (err) {
+        console.error("OAuth error", err);
+        }
+    };
+
+    if (!isLoaded) {
+        return (
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <Text>Loading authentication...</Text>
+            </View>
+        );
+    }
     return (
         <GestureHandlerRootView>
         <SafeAreaView>
             <Marquee 
                 spacing={10}
-                speed={0.8}
+                speed={1}
                 style={{
                     transform:[{rotate:'-5deg'}],
                 }}
@@ -36,7 +73,7 @@ const Landing = () => {
             </Marquee>
             <Marquee 
                 spacing={10}
-                speed={0.5}
+                speed={0.2}
                 style={{
                     transform:[{rotate:'-5deg'}],
                     marginTop:15
@@ -50,7 +87,7 @@ const Landing = () => {
             </Marquee>
             <Marquee 
                 spacing={10}
-                speed={1}
+                speed={1.5}
                 style={{
                     transform:[{rotate:'-5deg'}],
                     marginTop:15
@@ -63,21 +100,27 @@ const Landing = () => {
             </View>
             </Marquee>
             <View style={styles.container}>
-                <Text style={{fontFamily:'s-bolditalic',fontSize:30,marginTop:10,margin:'3%',textAlign:'center'}}>Cookmate AI 🍲🔍| Find, Create & Enjoy Delicious Recipes!</Text>
-                <Text style={{fontFamily:'s',fontSize:20,margin:'3%',textAlign:'center'}}>Generate delicious recipes in seconds with the power of Al!🍔✨</Text>
-                <TouchableOpacity onPress={()=>{router.push('/(tabs)/Home')}} style={{width:'100%',height:'100%',display:'flex',alignItems:'center',}}>
+                <Text style={{fontFamily:'s-bolditalic',fontSize:30,marginTop:10,margin:'3%',textAlign:'center'}}>SoulStretch 💫🧘 | Find Balance, Build Strength & Awaken Calm!</Text>
+                <Text style={{fontFamily:'s',fontSize:20,margin:'3%',textAlign:'center'}}>Balance your mind, strengthen your body, and follow your progress. 🌼✨</Text>
+                <SignedOut>
+                <TouchableOpacity onPress={signInWithGoogle} style={{width:'100%',height:'100%',display:'flex',alignItems:'center',}}>
                     <View  style={styles.buttonContainer}>
-                        <Text style={styles.button}>Get Started</Text>
+                        <Text style={styles.button}>Get Started With <AntDesign name="google" size={24} color="white" style={styles.search1}/>oogle</Text>
                     </View>
                 </TouchableOpacity>
-                
+                </SignedOut>
+                <SignedIn>
+                    <TouchableOpacity onPress={()=>{router.push('/(tabs)/Home')}} style={{width:'100%',height:'100%',display:'flex',alignItems:'center',}}>
+                    <View  style={styles.buttonContainer}>
+                        <Text style={styles.button}>Let's GOOOOO</Text>
+                    </View>
+                </TouchableOpacity>
+            </SignedIn>
             </View>
         </SafeAreaView>
         </GestureHandlerRootView>
     )
 }
-
-export default Landing
 
 const styles = StyleSheet.create({
     image:{

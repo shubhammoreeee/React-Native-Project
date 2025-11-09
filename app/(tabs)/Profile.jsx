@@ -9,8 +9,44 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Redirect, router } from 'expo-router';
+import { ClerkProvider, SignedIn, SignedOut, useOAuth } from "@clerk/clerk-expo";
+import { useAuth } from "@clerk/clerk-expo";
+import * as Linking from "expo-linking";
 
-const Profile = () => {
+const clerkKey = "pk_test_bWFqb3ItYXNwLTQ5LmNsZXJrLmFjY291bnRzLmRldiQ";
+
+export default function Profile() {
+    return (
+      <Main1/>
+    );
+}
+
+const Main1 = () => {
+  const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
+    const { isLoaded, signOut } = useAuth();
+      
+    const signInWithGoogle = async () => {
+      try {
+        const { createdSessionId, setActive } = await startOAuthFlow({
+          redirectUrl: Linking.createURL("/Home", { scheme: "recipekartai" }),
+        });
+  
+        if (createdSessionId) {
+          await setActive?.({ session: createdSessionId });
+          alert("✅ Logged in successfully!");
+        }
+      } catch (err) {
+        console.error("OAuth error", err);
+      }
+    };
+  
+    if (!isLoaded) {
+      return (
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <Text>Loading authentication...</Text>
+        </View>
+      );
+    }
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -24,10 +60,10 @@ const Profile = () => {
           <Feather name="settings" size={24} color="black" style={styles.search}/>
         </View>
       </View>
-      <View style={{marginTop:'-5%',}}>
+      <View style={{marginTop:'-10%',}}>
         <View style={{display:'flex',flexDirection:'row',marginBottom:'4%'}}>
           <Image
-            source={require('./../../assets/images/i4.png')}
+            source={require('./../../assets/images/i4j.png')}
             style={styles.image}
           />
           <View>
@@ -68,7 +104,7 @@ const Profile = () => {
           </View>
         </View>
       </View>
-      <View style={{marginTop:'-60%',marginHorizontal:'5%',display:'flex'}}>
+      <View style={{marginTop:'-70%',marginHorizontal:'5%',display:'flex'}}>
         <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between',borderBottomWidth:0.2,borderColor:'lightgray',padding:'3%'}}>
           <View style={{display:'flex',flexDirection:'row',gap:'10%'}}><Feather name="activity" size={24} color="black"/>
           <View>
@@ -101,7 +137,7 @@ const Profile = () => {
           </View></View>
           <View><Ionicons name="chevron-forward-outline" size={24} color="black"/></View>
         </View>
-        <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between',borderBottomWidth:0.2,borderColor:'lightgray',padding:'3%'}}>
+        <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between',borderBottomWidth:0.3,borderColor:'lightgray',padding:'3%'}}>
           <View style={{display:'flex',flexDirection:'row',gap:'7%'}}><MaterialCommunityIcons name="lightning-bolt-circle" size={24} color="black"/>
           <View>
             <Text style={{fontFamily:'s-bold'}}>Equipment</Text>
@@ -110,13 +146,36 @@ const Profile = () => {
           <View><Ionicons name="chevron-forward-outline" size={24} color="black"/></View>
         </View>
       </View>
+      <View style={{height:'10%'}}>
+          <SignedIn>    
+          <TouchableOpacity onPress={() => (signOut?.(),router.push('/Landing'))} style={{width:'50%',height:'1000%',display:'flex',alignItems:'center',marginHorizontal:'25%',marginTop:'3%'}}>
+            <View  style={styles.buttonContainer}>
+              <Text style={styles.button}>Sign Out</Text>
+            </View>
+          </TouchableOpacity>
+        </SignedIn>
+        </View>
     </SafeAreaView>
   )
 }
 
-export default Profile
-
 const styles = StyleSheet.create({
+  buttonContainer:{
+          width:'80%',
+          height:'5%',
+          borderRadius:25,
+          backgroundColor:'black',
+          display:'flex',
+          alignItems:'center',
+          justifyContent:'center',
+          margin:'3%',
+          paddingBottom:'2%'
+      },
+      button:{
+          fontSize:20,
+          fontFamily:'s',
+          color:'white',
+      },
   container:{
         display:'flex',
         flexDirection:'row',
@@ -128,13 +187,14 @@ const styles = StyleSheet.create({
         height:'100%',
         width:'100%',
         marginHorizontal:'5%',
-        marginTop:'2%'
+        marginTop:'3%'
     },
     image:{
         height:'117%',
         width:'14%',
         marginHorizontal:'5%',
-        marginTop:'0%'
+        marginTop:'0%',
+        borderRadius:35
     },
     text1:{
         fontFamily:'s-regular',
@@ -176,7 +236,7 @@ const styles = StyleSheet.create({
     gap:'0%',
     height:'48%',
     width:'80%',
-    marginTop:'-25%',
+    marginTop:'-30%',
   },
   gridItem: {
     paddingLeft:'3%',
@@ -203,5 +263,6 @@ const styles = StyleSheet.create({
         height:'18%',
         width:'5%',
         marginHorizontal:'5%',
+        marginTop:'2%'
     }
 })

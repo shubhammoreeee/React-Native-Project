@@ -24,7 +24,7 @@ const Home = () => {
             <Text style={{fontFamily:'s',fontSize:14,marginTop:'%'}}>Do your plan before 09:00 Am</Text>
             <View style={{height:'100%',width:'100%',display:'flex',flexDirection:'row'}}>
             <Image
-              source={require('./../../assets/images/i4.png')}
+              source={require('./../../assets/images/i4j.png')}
               style={styles.image}
             />
             <Image
@@ -32,7 +32,7 @@ const Home = () => {
               style={styles.image2}
             />
             <Image
-              source={require('./../../assets/images/i4.png')}
+              source={require('./../../assets/images/i4j.png')}
               style={styles.image3}
             />
             <Image
@@ -42,7 +42,7 @@ const Home = () => {
             </View>
           </View>
             <Image
-              source={require('./../../assets/images/logo1.png')}
+              source={require('./../../assets/images/logo1j.png')}
               style={styles.image1}
             />
           </View>
@@ -129,9 +129,9 @@ export default Home
 const styles = StyleSheet.create({
   intro:{
     height:'55%',
-    width:'90%',
+    width:'92%',
     backgroundColor:'#a78dfcff',
-    borderRadius:'15%',
+    borderRadius:'10%',
     display:'flex',
     flexDirection:'row',
     marginTop:'-10%',
@@ -139,25 +139,28 @@ const styles = StyleSheet.create({
   image:{
         height:'20%',
         width:'20%',
-        marginTop:'12%'
+        marginTop:'12%',
+        borderRadius:35
     },
   image2:{
         height:'20%',
         width:'20%',
         marginTop:'12%',
-        marginLeft:'-7%'
+        marginLeft:'-7%',
+        borderRadius:35
     },
   image3:{
         height:'20%',
         width:'20%',
         marginTop:'12%',
-        marginLeft:'-7%'
+        marginLeft:'-7%',
+        borderRadius:35
     },
   image1:{
       position:'absolute',
-      right:10,
+      right:0,
       height:'90%',
-      width:'35%',
+      width:'50%',
       borderRadius:50,
       top:'5%'
   },

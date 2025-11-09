@@ -11,15 +11,15 @@ import { Redirect, router } from 'expo-router';
 const Explore = () => {
   const [text, setText] = useState('');
   const imageList = [
-        require('./../../assets/images/1.jpg'),
-        require('./../../assets/images/c1.jpg'),
-        require('./../../assets/images/2.jpg'),
-        require('./../../assets/images/c2.jpg'),
-        require('./../../assets/images/3.jpg'),
-        require('./../../assets/images/6.jpg'),
-        require('./../../assets/images/4.jpg'),
-        require('./../../assets/images/c3.jpg'),
-        require('./../../assets/images/5.jpg'),
+        require('./../../assets/images/1j.png'),
+        require('./../../assets/images/c1j.png'),
+        require('./../../assets/images/2j.png'),
+        require('./../../assets/images/c2j.png'),
+        require('./../../assets/images/3j.png'),
+        require('./../../assets/images/6j.png'),
+        require('./../../assets/images/4j.png'),
+        require('./../../assets/images/c3j.png'),
+        require('./../../assets/images/5j.png'),
     ]
   return (
     <GestureHandlerRootView>
@@ -67,7 +67,7 @@ const Explore = () => {
           
         <View style={styles.CardContainer}>
           <TouchableOpacity onPress={()=>{router.push('/Trainer')}} style={{height:'100%',width:'100%',marginTop:'40%'}}>
-            <Image source={require('./../../assets/images/1.jpg')} style={styles.image1}/>
+            <Image source={require('./../../assets/images/1j.png')} style={styles.image1}/>
             <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🌸 Breathe. Stretch. Find peace.</Text>
             <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
               <View style={{display:'flex',flexDirection:'row'}}>
@@ -78,7 +78,7 @@ const Explore = () => {
             </TouchableOpacity>
         </View>
         <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/c1.jpg')} style={styles.image1}/>
+            <Image source={require('./../../assets/images/c1j.png')} style={styles.image1}/>
             <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>☀️ Calm mind, strong body.</Text>
             <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
               <View style={{display:'flex',flexDirection:'row'}}>
@@ -88,7 +88,7 @@ const Explore = () => {
             </View>
         </View>
         <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/2.jpg')} style={styles.image1}/>
+            <Image source={require('./../../assets/images/2j.png')} style={styles.image1}/>
             <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🕉️ Balance. Focus. Harmony.</Text>
             <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
               <View style={{display:'flex',flexDirection:'row'}}>
@@ -98,7 +98,7 @@ const Explore = () => {
             </View>
         </View>
         <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/c2.jpg')} style={styles.image1}/>
+            <Image source={require('./../../assets/images/c2j.png')} style={styles.image1}/>
             <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🌿 Flow with your breath.</Text>
             <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
               <View style={{display:'flex',flexDirection:'row'}}>
@@ -108,7 +108,7 @@ const Explore = () => {
             </View>
         </View>
         <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/3.jpg')} style={styles.image1}/>
+            <Image source={require('./../../assets/images/3j.png')} style={styles.image1}/>
             <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🌼 Peace through movement.</Text>
             <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
               <View style={{display:'flex',flexDirection:'row'}}>
@@ -118,7 +118,7 @@ const Explore = () => {
             </View>
         </View>
         <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/c3.jpg')} style={styles.image1}/>
+            <Image source={require('./../../assets/images/c3j.png')} style={styles.image1}/>
             <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>💫 Inhale strength, exhale stress.</Text>
             <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
               <View style={{display:'flex',flexDirection:'row'}}>
@@ -128,7 +128,7 @@ const Explore = () => {
             </View>
         </View>
         <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/4.jpg')} style={styles.image1}/>
+            <Image source={require('./../../assets/images/4j.png')} style={styles.image1}/>
             <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🌙 Move. Meditate. Grow.</Text>
             <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
               <View style={{display:'flex',flexDirection:'row'}}>
@@ -138,7 +138,7 @@ const Explore = () => {
             </View>
         </View>
         <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/1.jpg')} style={styles.image1}/>
+            <Image source={require('./../../assets/images/5j.png')} style={styles.image1}/>
             <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🔆 Inner peace begins here.</Text>
             <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
               <View style={{display:'flex',flexDirection:'row'}}>
@@ -148,7 +148,7 @@ const Explore = () => {
             </View>
         </View>
         <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/c1.jpg')} style={styles.image1}/>
+            <Image source={require('./../../assets/images/c1j.png')} style={styles.image1}/>
             <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🌻 Mindful body, peaceful soul.</Text>
             <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
               <View style={{display:'flex',flexDirection:'row'}}>
@@ -158,7 +158,7 @@ const Explore = () => {
             </View>
         </View>
         <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/2.jpg')} style={styles.image1}/>
+            <Image source={require('./../../assets/images/6j.png')} style={styles.image1}/>
             <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🍃 Stretch into stillness.</Text>
             <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
               <View style={{display:'flex',flexDirection:'row'}}>

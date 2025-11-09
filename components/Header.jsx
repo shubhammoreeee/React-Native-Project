@@ -8,7 +8,7 @@ const Header = () => {
         <View style={styles.container}>
             <TouchableOpacity onPress={()=>{router.push('/(tabs)/Profile')}}>
             <Image
-                source={require('./../assets/images/i4.png')}
+                source={require('./../assets/images/i4j.png')}
                 style={styles.image}
             /></TouchableOpacity>
             <View style={{display:'flex',alignContent:'center'}}>
@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
     image:{
         height:'22%',
         width:'50%',
-        marginLeft:'25%'
+        marginLeft:'25%',
+        borderRadius:35
     },
     text1:{
         fontFamily:'s-bold',
