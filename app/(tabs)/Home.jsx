@@ -46,6 +46,7 @@ const Home = () => {
   return (
     <GestureHandlerRootView>
     <SafeAreaView>
+    <ScrollView contentContainerStyle={{height:'100%',width:'100%',paddingBottom:'20%'}}>
       <Header/>
       <View style={{display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
         <View style={styles.intro}>
@@ -162,6 +163,7 @@ const Home = () => {
       </View>
       </View>
       </View>
+      </ScrollView>
     </SafeAreaView>
     </GestureHandlerRootView>
   )
@@ -208,7 +210,7 @@ const styles = StyleSheet.create({
       top:'-15%'
   },
   calender:{
-    height:'80%',
+    height:'100%',
     width:'18%',
     backgroundColor:'white',
     padding:10,
@@ -283,7 +285,7 @@ const styles = StyleSheet.create({
     bottom:10,
     display:'flex',
     flexDirection:'row',
-    gap:20
+    gap:10
   },
   containerImage:{
         display:'flex',
