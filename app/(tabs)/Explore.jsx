@@ -3,13 +3,65 @@ import React, {useState} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '@/services/Colors';
 import {Marquee} from '@animatereactnative/marquee'
 import {GestureHandlerRootView, ScrollView} from 'react-native-gesture-handler'
 import { Redirect, router } from 'expo-router';
+import { Share } from "react-native";
+import { TapGestureHandler, State } from 'react-native-gesture-handler';
 
 const Explore = () => {
+  
   const [text, setText] = useState('');
+  const cardData = [
+  { id:1,image: require('../../assets/images/1j.png'), caption: '🌸 Breathe. Stretch. Find peace.',like:15 },
+  { id:2,image: require('../../assets/images/c1j.png'), caption: '☀️ Calm mind, strong body.',like:351 },
+  { id:3,image: require('../../assets/images/2j.png'), caption: '🕉️ Balance. Focus. Harmony.',like:565 },
+  { id:4,image: require('../../assets/images/c2j.png'), caption: '🌿 Flow with your breath.',like:852 },
+  { id:5,image: require('../../assets/images/3j.png'), caption: '🌼 Peace through movement.',like:4498 },
+  { id:6,image: require('../../assets/images/c3j.png'), caption: '💫 Inhale strength, exhale stress.',like:987 },
+  { id:7,image: require('../../assets/images/4j.png'), caption: '🌙 Move. Meditate. Grow.',like:236 },
+  { id:8,image: require('../../assets/images/5j.png'), caption: '🔆 Inner peace begins here.',like:778 },
+  { id:9,image: require('../../assets/images/6j.png'), caption: '🌻 Mindful body, peaceful soul.',like:1216 },
+  { id:10,image: require('../../assets/images/c1j.png'), caption: '🍃 Stretch into stillness.',like:35 },
+];
+  const onShare = async () => {
+      try {
+        await Share.share({
+          title: "Cool Card!",
+          message: "You share this card successfully & This is my porfolio link: https://shubham-more-portfolio.netlify.app/",
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  const [likedCards, setLikedCards] = useState([]);
+  const [likesCount, setLikesCount] = useState(Object.fromEntries(cardData.map(card => [card.id, card.like])));
+  const toggleLike = (id) => {
+    setLikedCards((prev) => {
+    const alreadyLiked = prev.includes(id);
+    setLikesCount((counts) => ({
+      ...counts,
+      [id]: counts[id] + (alreadyLiked ? -1 : 1),
+    }));
+    return alreadyLiked
+      ? prev.filter((cardId) => cardId !== id)
+      : [...prev, id];
+  });
+  };
+  const filteredCards = cardData.filter((card) => {
+    const search = text.toLowerCase();
+    if (search === "like" || search === "liked") {
+      return likedCards.includes(card.id);
+    }
+    return (
+      card.caption.toLowerCase().includes(search)
+    );
+  });
+  const clearSearch = () => {
+    setText("");
+  };
   const imageList = [
         require('./../../assets/images/1j.png'),
         require('./../../assets/images/c1j.png'),
@@ -32,8 +84,11 @@ const Explore = () => {
           onChangeText={setText}
           placeholder='Looking for Yoga Exercise'
           style={{marginRight:'30%'}}
-          onSubmitEditing={() => setText('')} 
+          onFocus={() => setText('')}
         ></TextInput>
+        <TouchableOpacity onPress={clearSearch} style={{position:'absolute',top:'25%',right:'2%'}}>
+          <MaterialIcons name="cancel" size={24} color="black"/>
+        </TouchableOpacity>
       </View>
       <View>
         <Marquee 
@@ -46,8 +101,10 @@ const Explore = () => {
           <View style={styles.imageContainer}>
             {imageList.map((image,index)=>(
               <View key={index} style={{display:'flex',alignContent:'center',justifyContent:'center'}}>
-              <Image key={index} source={image} blurRadius={5} style={styles.image}/>
-              <Text style={{textAlign:'center',marginTop:'-55%',color:Colors.White,fontFamily:'s-regular',fontSize:20}}>{[index === 0 ? 'Yoga' : null,index === 1 ? 'Gym' : null,index === 2 ? 'Yoga' : null,index === 3 ? 'Gym' : null,index === 4 ? 'Yoga' : null,index === 5 ? 'Gym' : null,index === 6 ? 'Yoga' : null,index === 7 ? 'Gym' : null,index === 8 ? 'Yoga' : null]}</Text>
+                <TouchableOpacity onPress={()=>{router.push('/Trainer')}}>
+                  <Image key={index} source={image} blurRadius={5} style={styles.image}/>
+                  <Text style={{textAlign:'center',marginTop:'-55%',color:Colors.White,fontFamily:'s-regular',fontSize:20}}>{[index === 0 ? 'Meditation' : null,index === 1 ? 'Stretching' : null,index === 2 ? 'Breathing' : null,index === 3 ? 'Balance' : null,index === 4 ? 'Relaxation' : null,index === 5 ? 'Power Yoga' : null,index === 6 ? 'Beginner' : null,index === 7 ? 'Advanced' : null,index === 8 ? 'Night Yoga' : null]}</Text>
+                </TouchableOpacity>
               </View>
             ))}
           </View>
@@ -64,109 +121,32 @@ const Explore = () => {
         padding: 10,
         gap:15,
         marginTop:'-10%'}}>
-          
-        <View style={styles.CardContainer}>
+        {filteredCards.length === 0 ? (
+  <Text style={styles.noResult}>No results found</Text>
+) : (
+  filteredCards.map((item, id) => (
+        <View key={id} style={styles.CardContainer}>
           <TouchableOpacity onPress={()=>{router.push('/Trainer')}} style={{height:'100%',width:'100%',marginTop:'40%'}}>
-            <Image source={require('./../../assets/images/1j.png')} style={styles.image1}/>
-            <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🌸 Breathe. Stretch. Find peace.</Text>
+            <Image source={item.image} style={styles.image1}/>
+            <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>{item.caption}</Text>
             <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
-              <View style={{display:'flex',flexDirection:'row'}}>
-            <Feather name="heart" size={24} color="black" style={styles.search} onPress={() => {<FontAwesome name="heart" size={24} color="black" style={styles.search}/>}}/>
-            <Text style={{color:'black',fontFamily:'s-regular',fontSize:18}}>23</Text></View>
-            <Feather name="share" size={24} color="black" style={styles.search}/>
+            <View style={{display:'flex',flexDirection:'row',gap:5}}>
+            <TouchableOpacity onPress={() => toggleLike(item.id)}>
+                {likedCards.includes(item.id) ? (
+                  <FontAwesome name="heart" size={24} color="red" />
+                ) : (
+                  <Feather name="heart" size={24} color="black" />
+                )}
+              </TouchableOpacity>
+            <Text style={{color:'black',fontFamily:'s-regular',fontSize:18}}>{likesCount[item.id]}</Text></View>
+            <TouchableOpacity onPress={onShare} style={styles.search}>
+              <Feather name="share" size={24} color="black"/>
+            </TouchableOpacity>
             </View>
             </TouchableOpacity>
         </View>
-        <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/c1j.png')} style={styles.image1}/>
-            <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>☀️ Calm mind, strong body.</Text>
-            <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
-              <View style={{display:'flex',flexDirection:'row'}}>
-            <FontAwesome name="heart" size={24} color="black" style={styles.search}/>
-            <Text style={{color:'black',fontFamily:'s-regular',fontSize:18}}>3M</Text></View>
-            <Feather name="share" size={24} color="black" style={styles.search}/>
-            </View>
-        </View>
-        <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/2j.png')} style={styles.image1}/>
-            <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🕉️ Balance. Focus. Harmony.</Text>
-            <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
-              <View style={{display:'flex',flexDirection:'row'}}>
-            <Feather name="heart" size={24} color="black" style={styles.search} onPress={() => {<FontAwesome name="heart" size={24} color="black" style={styles.search}/>}}/>
-            <Text style={{color:'black',fontFamily:'s-regular',fontSize:18}}>250</Text></View>
-            <Feather name="share" size={24} color="black" style={styles.search}/>
-            </View>
-        </View>
-        <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/c2j.png')} style={styles.image1}/>
-            <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🌿 Flow with your breath.</Text>
-            <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
-              <View style={{display:'flex',flexDirection:'row'}}>
-            <FontAwesome name="heart" size={24} color="black" style={styles.search}/>
-            <Text style={{color:'black',fontFamily:'s-regular',fontSize:18}}>215</Text></View>
-            <Feather name="share" size={24} color="black" style={styles.search}/>
-            </View>
-        </View>
-        <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/3j.png')} style={styles.image1}/>
-            <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🌼 Peace through movement.</Text>
-            <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
-              <View style={{display:'flex',flexDirection:'row'}}>
-            <Feather name="heart" size={24} color="black" style={styles.search} onPress={() => {<FontAwesome name="heart" size={24} color="black" style={styles.search}/>}}/>
-            <Text style={{color:'black',fontFamily:'s-regular',fontSize:18}}>498</Text></View>
-            <Feather name="share" size={24} color="black" style={styles.search}/>
-            </View>
-        </View>
-        <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/c3j.png')} style={styles.image1}/>
-            <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>💫 Inhale strength, exhale stress.</Text>
-            <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
-              <View style={{display:'flex',flexDirection:'row'}}>
-            <FontAwesome name="heart" size={24} color="black" style={styles.search}/>
-            <Text style={{color:'black',fontFamily:'s-regular',fontSize:18}}>2</Text></View>
-            <Feather name="share" size={24} color="black" style={styles.search}/>
-            </View>
-        </View>
-        <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/4j.png')} style={styles.image1}/>
-            <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🌙 Move. Meditate. Grow.</Text>
-            <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
-              <View style={{display:'flex',flexDirection:'row'}}>
-            <Feather name="heart" size={24} color="black" style={styles.search} onPress={() => {<FontAwesome name="heart" size={24} color="black" style={styles.search}/>}}/>
-            <Text style={{color:'black',fontFamily:'s-regular',fontSize:18}}>275</Text></View>
-            <Feather name="share" size={24} color="black" style={styles.search}/>
-            </View>
-        </View>
-        <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/5j.png')} style={styles.image1}/>
-            <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🔆 Inner peace begins here.</Text>
-            <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
-              <View style={{display:'flex',flexDirection:'row'}}>
-            <FontAwesome name="heart" size={24} color="black" style={styles.search}/>
-            <Text style={{color:'black',fontFamily:'s-regular',fontSize:18}}>852</Text></View>
-            <Feather name="share" size={24} color="black" style={styles.search}/>
-            </View>
-        </View>
-        <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/c1j.png')} style={styles.image1}/>
-            <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🌻 Mindful body, peaceful soul.</Text>
-            <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
-              <View style={{display:'flex',flexDirection:'row'}}>
-            <Feather name="heart" size={24} color="black" style={styles.search} onPress={() => {<FontAwesome name="heart" size={24} color="black" style={styles.search}/>}}/>
-            <Text style={{color:'black',fontFamily:'s-regular',fontSize:18}}>280</Text></View>
-            <Feather name="share" size={24} color="black" style={styles.search}/>
-            </View>
-        </View>
-        <View style={styles.CardContainer}>
-            <Image source={require('./../../assets/images/6j.png')} style={styles.image1}/>
-            <Text style={{color:'black',fontFamily:'s-bolditalic',fontSize:16,textAlign:'center'}}>🍃 Stretch into stillness.</Text>
-            <View style={{display:'flex',justifyContent:'space-between',alignContent:'center',flexDirection:'row',marginTop:'5%'}}>
-              <View style={{display:'flex',flexDirection:'row'}}>
-            <Feather name="heart" size={24} color="black" style={styles.search} onPress={() => {<FontAwesome name="heart" size={24} color="black" style={styles.search}/>}}/>
-            <Text style={{color:'black',fontFamily:'s-regular',fontSize:18}}>789</Text></View>
-            <Feather name="share" size={24} color="black" style={styles.search}/>
-            </View>
-        </View>
+        ))
+      )}
       </View>
       </ScrollView>
     </SafeAreaView>
@@ -177,15 +157,21 @@ const Explore = () => {
 export default Explore
 
 const styles = StyleSheet.create({
+  noResult: {
+    textAlign: "center",
+    marginTop: 40,
+    color: "#888",
+    fontSize: 16,
+  },
   container: {
-    paddingBottom: 0,
+    paddingBottom: '80%',
   },
   search:{
         marginHorizontal:'7%',
         alignSelf:'center',
     },
     searchContainer:{
-        height:'3%',
+        height:55,
         width:'85%',
         marginBottom:'5%',
         backgroundColor:'white',

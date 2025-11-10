@@ -12,6 +12,8 @@ import { Redirect, router } from 'expo-router';
 import { ClerkProvider, SignedIn, SignedOut, useOAuth } from "@clerk/clerk-expo";
 import { useAuth } from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
+import { useUser } from "@clerk/clerk-expo";
+import { Share } from "react-native";
 
 const clerkKey = "pk_test_bWFqb3ItYXNwLTQ5LmNsZXJrLmFjY291bnRzLmRldiQ";
 
@@ -22,6 +24,18 @@ export default function Profile() {
 }
 
 const Main1 = () => {
+  const onShare = async () => {
+        try {
+          await Share.share({
+            title: "Cool Card!",
+            message: "You share your YogaMate account successfully & This is my porfolio link: https://shubham-more-portfolio.netlify.app/",
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      };
+  const { user } = useUser();
+      if (!user) return null;
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
     const { isLoaded, signOut } = useAuth();
       
@@ -56,19 +70,19 @@ const Main1 = () => {
         <View style={{display:'flex',alignContent:'center'}}>
           <Text style={styles.text1}>Profile</Text>
         </View>
-        <View style={styles.searchContainer}>
+        <TouchableOpacity onPress={()=>{router.push('/Setting')}} style={styles.searchContainer}>
           <Feather name="settings" size={24} color="black" style={styles.search}/>
-        </View>
+        </TouchableOpacity>
       </View>
       <View style={{marginTop:'-10%',}}>
         <View style={{display:'flex',flexDirection:'row',marginBottom:'4%'}}>
           <Image
-            source={require('./../../assets/images/i4j.png')}
+            source={{ uri: user.imageUrl }}
             style={styles.image}
           />
           <View>
-            <Text style={{fontFamily:'s-bold',fontSize:16,}}>Sandra Glam</Text>
-            <Text style={{fontFamily:'s-regular',fontSize:16,color:'gray'}}>Denmark, Copenhagen</Text>
+            <Text style={{fontFamily:'s-bold',fontSize:16,}}>{user.fullName}</Text>
+            <Text style={{fontFamily:'s-regular',fontSize:16,color:'gray'}}>{user.primaryEmailAddress?.emailAddress}</Text>
           </View>
         </View>
         <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between',marginHorizontal:'5%',width:'120%'}}>
@@ -83,8 +97,7 @@ const Main1 = () => {
             </View>
           </View>
           <View style={{display:'flex',flexDirection:'row'}}>
-            <View style={styles.searchContainer1}><Feather name="external-link" size={24} color="black" style={styles.search}/></View>
-            <View style={styles.searchContainer1}><AntDesign name="edit" size={24} color="black" style={styles.search}/></View>
+            <TouchableOpacity onPress={onShare} style={styles.searchContainer1}><Feather name="external-link" size={24} color="black" style={styles.search}/></TouchableOpacity>
           </View>
         </View>
       </View>
@@ -104,14 +117,14 @@ const Main1 = () => {
           </View>
         </View>
       </View>
-      <View style={{marginTop:'-70%',marginHorizontal:'5%',display:'flex'}}>
+      <View style={{marginTop:'-65%',marginHorizontal:'5%',display:'flex'}}>
         <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between',borderBottomWidth:0.2,borderColor:'lightgray',padding:'3%'}}>
           <View style={{display:'flex',flexDirection:'row',gap:'10%'}}><Feather name="activity" size={24} color="black"/>
           <View>
             <Text style={{fontFamily:'s-bold'}}>Physical activity</Text>
             <Text>2 days ago</Text>
           </View></View>
-          <View><Ionicons name="chevron-forward-outline" size={24} color="black"/></View>
+          <TouchableOpacity onPress={()=>{router.push('/(tabs)/Analytics')}}><Ionicons name="chevron-forward-outline" size={24} color="black"/></TouchableOpacity>
         </View>
         <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between',borderBottomWidth:0.2,borderColor:'lightgray',padding:'3%'}}>
           <View style={{display:'flex',flexDirection:'row',gap:'12%'}}><Foundation name="graph-horizontal" size={24} color="black"/>
@@ -119,7 +132,7 @@ const Main1 = () => {
             <Text style={{fontFamily:'s-bold'}}>Statistics</Text>
             <Text>This year : 109 km's</Text>
           </View></View>
-          <View><Ionicons name="chevron-forward-outline" size={24} color="black"/></View>
+          <TouchableOpacity onPress={()=>{router.push('/(tabs)/Analytics')}}><Ionicons name="chevron-forward-outline" size={24} color="black"/></TouchableOpacity>
         </View>
         <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between',borderBottomWidth:0.2,borderColor:'lightgray',padding:'3%'}}>
           <View style={{display:'flex',flexDirection:'row',gap:'12%'}}><FontAwesome5 name="route" size={24} color="black"/>
@@ -127,7 +140,7 @@ const Main1 = () => {
             <Text style={{fontFamily:'s-bold'}}>Routes</Text>
             <Text>7</Text>
           </View></View>
-          <View><Ionicons name="chevron-forward-outline" size={24} color="black"/></View>
+          <TouchableOpacity onPress={()=>{router.push('/(tabs)/Analytics')}}><Ionicons name="chevron-forward-outline" size={24} color="black"/></TouchableOpacity>
         </View>
         <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between',borderBottomWidth:0.2,borderColor:'lightgray',padding:'3%'}}>
           <View style={{display:'flex',flexDirection:'row',gap:'12%'}}><SimpleLineIcons name="trophy" size={24} color="black"/>
@@ -135,7 +148,7 @@ const Main1 = () => {
             <Text style={{fontFamily:'s-bold'}}>Best time</Text>
             <Text>Show all</Text>
           </View></View>
-          <View><Ionicons name="chevron-forward-outline" size={24} color="black"/></View>
+          <TouchableOpacity onPress={()=>{router.push('/(tabs)/Analytics')}}><Ionicons name="chevron-forward-outline" size={24} color="black"/></TouchableOpacity>
         </View>
         <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between',borderBottomWidth:0.3,borderColor:'lightgray',padding:'3%'}}>
           <View style={{display:'flex',flexDirection:'row',gap:'7%'}}><MaterialCommunityIcons name="lightning-bolt-circle" size={24} color="black"/>
@@ -143,39 +156,14 @@ const Main1 = () => {
             <Text style={{fontFamily:'s-bold'}}>Equipment</Text>
             <Text>2Nike Pegasus 3000 : 130,4 km</Text>
           </View></View>
-          <View><Ionicons name="chevron-forward-outline" size={24} color="black"/></View>
+          <TouchableOpacity onPress={()=>{router.push('/(tabs)/Analytics')}}><Ionicons name="chevron-forward-outline" size={24} color="black"/></TouchableOpacity>
         </View>
       </View>
-      <View style={{height:'10%'}}>
-          <SignedIn>    
-          <TouchableOpacity onPress={() => (signOut?.(),router.push('/Landing'))} style={{width:'50%',height:'1000%',display:'flex',alignItems:'center',marginHorizontal:'25%',marginTop:'3%'}}>
-            <View  style={styles.buttonContainer}>
-              <Text style={styles.button}>Sign Out</Text>
-            </View>
-          </TouchableOpacity>
-        </SignedIn>
-        </View>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  buttonContainer:{
-          width:'80%',
-          height:'5%',
-          borderRadius:25,
-          backgroundColor:'black',
-          display:'flex',
-          alignItems:'center',
-          justifyContent:'center',
-          margin:'3%',
-          paddingBottom:'2%'
-      },
-      button:{
-          fontSize:20,
-          fontFamily:'s',
-          color:'white',
-      },
   container:{
         display:'flex',
         flexDirection:'row',
@@ -219,15 +207,16 @@ const styles = StyleSheet.create({
     },
     searchContainer1:{
         height:'45%',
-        width:'22%',
+        width:'25%',
         backgroundColor:'white',
-        paddingLeft:'2%',
+        paddingLeft:'-5%',
         borderWidth:0.5,
         borderRadius:99,
         borderColor:'gray',
         display:'flex',
         justifyContent:'center',
-        alignContent:'center'
+        alignContent:'center',
+        marginRight:'15%'
     },
     container1: {
     flexDirection: 'row',

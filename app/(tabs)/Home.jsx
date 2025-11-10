@@ -1,11 +1,40 @@
-import { StyleSheet, Text, View, Image, Button } from 'react-native'
+import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../../components/Header'
 import { FontAwesome } from '@expo/vector-icons';
 import { Redirect, router } from 'expo-router';
+import { openURL } from 'expo-linking';
 
 const Home = () => {
+  const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const today = new Date();
+  const yesterday1 = new Date(today);
+  yesterday1.setDate(today.getDate() - 1);
+  const tomorrow1 = new Date(today);
+  tomorrow1.setDate(today.getDate() + 1);
+  const yesterday2 = new Date(today);
+  yesterday2.setDate(today.getDate() - 2);
+  const tomorrow2 = new Date(today);
+  tomorrow2.setDate(today.getDate() + 2);
+  const yesterday3 = new Date(today);
+  yesterday3.setDate(today.getDate() - 3);
+  const tomorrow3 = new Date(today);
+  tomorrow3.setDate(today.getDate() + 3);
+  const getDayInfo = (date) => {
+    return {
+      dateNumber: date.getDate(),          // e.g. 10
+      dayName: weekDays[date.getDay()],    // e.g. Mon
+    };
+  };
+  const yesterdayInfo = getDayInfo(yesterday1);
+  const todayInfo = getDayInfo(today);
+  const tomorrowInfo = getDayInfo(tomorrow1);
+  const yesterdayInfo1 = getDayInfo(yesterday2);
+  const tomorrowInfo1 = getDayInfo(tomorrow2);
+  const yesterdayInfo2 = getDayInfo(yesterday3);
+  const tomorrowInfo2 = getDayInfo(tomorrow3);
+  
   const [isInverted, setIsInverted] = useState(false);
 
   const toggleInvert = () => setIsInverted(!isInverted);
@@ -50,38 +79,38 @@ const Home = () => {
       <View style={styles.calenderContainer}>
         <View style={styles.calender}>
           <Text style={styles.textcalen1}></Text>
-          <Text style={styles.textcalen2}>Sun</Text>
-          <Text style={styles.textcalen}>22</Text>
+          <Text style={styles.textcalen2}>{yesterdayInfo2.dayName}</Text>
+          <Text style={styles.textcalen}>{yesterdayInfo2.dateNumber}</Text>
         </View>
         <View style={styles.calender}>
           <Text style={styles.textcalen1}>.</Text>
-          <Text style={styles.textcalen2}>Mon</Text>
-          <Text style={styles.textcalen}>23</Text>
+          <Text style={styles.textcalen2}>{yesterdayInfo1.dayName}</Text>
+          <Text style={styles.textcalen}>{yesterdayInfo1.dateNumber}</Text>
         </View>
         <View style={styles.calender}>
           <Text style={styles.textcalen1}></Text>
-          <Text style={styles.textcalen2}>Tue</Text>
-          <Text style={styles.textcalen}>24</Text>
+          <Text style={styles.textcalen2}>{yesterdayInfo.dayName}</Text>
+          <Text style={styles.textcalen}>{yesterdayInfo.dateNumber}</Text>
         </View>
         <View style={[styles.calender,styles.inverted]}>
           <Text style={[styles.textcalen1,styles.inverted]}>.</Text>
-          <Text style={[styles.textcalen2,styles.inverted]}>Wed</Text>
-          <Text style={[styles.textcalen,styles.inverted]}>25</Text>
+          <Text style={[styles.textcalen2,styles.inverted]}>{todayInfo.dayName}</Text>
+          <Text style={[styles.textcalen,styles.inverted]}>{todayInfo.dateNumber}</Text>
         </View>
         <View style={styles.calender}>
           <Text style={styles.textcalen1}></Text>
-          <Text style={styles.textcalen2}>Thu</Text>
-          <Text style={styles.textcalen}>26</Text>
+          <Text style={styles.textcalen2}>{tomorrowInfo.dayName}</Text>
+          <Text style={styles.textcalen}>{tomorrowInfo.dateNumber}</Text>
         </View>
         <View style={styles.calender}>
           <Text style={styles.textcalen1}>.</Text>
-          <Text style={styles.textcalen2}>Fri</Text>
-          <Text style={styles.textcalen}>27</Text>
+          <Text style={styles.textcalen2}>{tomorrowInfo1.dayName}</Text>
+          <Text style={styles.textcalen}>{tomorrowInfo1.dateNumber}</Text>
         </View>
         <View style={styles.calender}>
           <Text style={styles.textcalen1}>.</Text>
-          <Text style={styles.textcalen2}>Sat</Text>
-          <Text style={styles.textcalen}>28</Text>
+          <Text style={styles.textcalen2}>{tomorrowInfo2.dayName}</Text>
+          <Text style={styles.textcalen}>{tomorrowInfo2.dateNumber}</Text>
         </View>
       </View>
       <View>
@@ -114,9 +143,15 @@ const Home = () => {
         <Text>A2 room</Text></View>
       </View>
       <View style={[styles.gridItem, styles.item3]}>
-        <FontAwesome name="instagram" size={24} color="black" style={styles.icon}/>
-        <FontAwesome name="youtube-play" size={22} color="black" style={styles.icon}/>
-        <FontAwesome name="twitter" size={22} color="black" style={styles.icon}/>
+        <TouchableOpacity onPress={() => openURL('https://instagram.com')} style={styles.touchable}>
+          <FontAwesome name="instagram" size={24} color="black" style={styles.icon}/>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => openURL('https://youtube.com')} style={styles.touchable}>
+          <FontAwesome name="youtube-play" size={22} color="black" style={styles.icon}/>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => openURL('https://x.com')} style={styles.touchable}>
+          <FontAwesome name="twitter" size={22} color="black" style={styles.icon}/>
+        </TouchableOpacity>
       </View>
       </View>
       </View>
@@ -159,10 +194,10 @@ const styles = StyleSheet.create({
   image1:{
       position:'absolute',
       right:0,
-      height:'90%',
+      height:'120%',
       width:'50%',
       borderRadius:50,
-      top:'5%'
+      top:'-15%'
   },
   calender:{
     height:'100%',

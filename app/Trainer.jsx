@@ -5,8 +5,20 @@ import { Ionicons} from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import {GestureHandlerRootView, ScrollView} from 'react-native-gesture-handler'
 import { Redirect, router } from 'expo-router';
+import { Share } from "react-native";
 
 const Trainer = () => {
+  const onShare = async () => {
+    try {
+      await Share.share({
+        title: "Cool Card!",
+        message: "You share this card successfully & This is my porfolio link: https://shubham-more-portfolio.netlify.app/",
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
     return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: '#fff' }}>
         <SafeAreaView style={{ flex: 1 }}>
@@ -15,7 +27,9 @@ const Trainer = () => {
             <TouchableOpacity onPress={()=>{router.push('/(tabs)/Explore')}} style={styles.touchable}>
                 <Ionicons name="chevron-back-outline" size={24} color="black" style={styles.search1}/>
             </TouchableOpacity>
-            <Feather name="share" size={24} color="black" style={styles.search}/>
+            <TouchableOpacity onPress={onShare} style={styles.search}>
+            <Feather name="share" size={24} color="black"/>
+            </TouchableOpacity>
             <Text style={{color:'white',fontFamily:'s-bold',fontSize:22,position:'absolute',bottom:'50%',left:'5%'}}>Yoga Group</Text>
             <Text style={{color:'white',fontFamily:'s-regular',fontSize:18,position:'absolute',bottom:'48%',left:'5%'}}>Trainer: Tiffany Way</Text>
             <View style={styles.discription}>

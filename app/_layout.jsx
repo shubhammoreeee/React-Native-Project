@@ -30,6 +30,16 @@ export default function RootLayout() {
           headerShown:false
         }}
       />
+      <Stack.Screen name="Setting" 
+        options={{
+          headerShown:false
+        }}
+      />
+      <Stack.Screen name="SettingApp" 
+        options={{
+          headerShown:false
+        }}
+      />
       <Stack.Screen name="(tabs)" 
         options={{
           headerShown:false

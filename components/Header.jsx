@@ -2,18 +2,21 @@ import { StyleSheet, Text, View,Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Feather } from '@expo/vector-icons';
 import { Redirect, router } from 'expo-router';
+import { useUser } from "@clerk/clerk-expo";
 
 const Header = () => {
+    const { user } = useUser();
+    if (!user) return null;
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={()=>{router.push('/(tabs)/Profile')}}>
             <Image
-                source={require('./../assets/images/i4j.png')}
+                source={{ uri: user.imageUrl }}
                 style={styles.image}
             /></TouchableOpacity>
             <View style={{display:'flex',alignContent:'center'}}>
-                <Text style={styles.text1}>Hello, Sandra</Text>
-                <Text style={styles.text2}>Today 25 Nov.</Text>
+                <Text style={styles.text1}>Hello, {user.firstName}</Text>
+                <Text style={styles.text2}>Today {new Date().getDate()} {new Date().toLocaleString('default', { month: 'short' })}.</Text>
             </View>
             <TouchableOpacity onPress={()=>{router.push('/(tabs)/Explore')}}>
             <View style={styles.searchContainer}>
