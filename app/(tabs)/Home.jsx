@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, Button, TouchableOpacity} from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import {GestureHandlerRootView, ScrollView} from 'react-native-gesture-handler'
 import Header from '../../components/Header'
 import { FontAwesome } from '@expo/vector-icons';
 import { Redirect, router } from 'expo-router';
@@ -43,6 +44,7 @@ const Home = () => {
     ? styles.inverted
     : styles.normal;
   return (
+    <GestureHandlerRootView>
     <SafeAreaView>
       <Header/>
       <View style={{display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
@@ -76,7 +78,12 @@ const Home = () => {
             />
           </View>
       </View>
-      <View style={styles.calenderContainer}>
+      <ScrollView
+      horizontal={true} // enables horizontal scrolling
+      showsHorizontalScrollIndicator={false} // hides scroll bar
+      style={styles.calenderContainer}
+      contentContainerStyle={{ paddingRight: '45%' }} 
+    >
         <View style={styles.calender}>
           <Text style={styles.textcalen1}></Text>
           <Text style={styles.textcalen2}>{yesterdayInfo2.dayName}</Text>
@@ -112,7 +119,7 @@ const Home = () => {
           <Text style={styles.textcalen2}>{tomorrowInfo2.dayName}</Text>
           <Text style={styles.textcalen}>{tomorrowInfo2.dateNumber}</Text>
         </View>
-      </View>
+      </ScrollView>
       <View>
         <Text style={{margin:'5%',fontFamily:'s-bolditalic',fontSize:28,marginBottom:'-3%'}}>Your Plan</Text>
         <View style={styles.container}>
@@ -156,6 +163,7 @@ const Home = () => {
       </View>
       </View>
     </SafeAreaView>
+    </GestureHandlerRootView>
   )
 }
 
@@ -200,14 +208,15 @@ const styles = StyleSheet.create({
       top:'-15%'
   },
   calender:{
-    height:'100%',
-    width:'13%',
+    height:'80%',
+    width:'18%',
     backgroundColor:'white',
     padding:10,
     borderRadius:25,
     borderWidth:0.5,
     borderColor:'gray',
-    overflow:'hidden'
+    overflow:'hidden',
+    marginHorizontal:'2%'
   },
   textcalen:{
     textAlign:'center'

@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native'
+import { Image,ActivityIndicator, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native'
 import * as WebBrowser from "expo-web-browser";
 import React from 'react'
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -52,9 +52,10 @@ const Main = () => {
 
     if (!isLoaded) {
         return (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                <Text>Loading authentication...</Text>
-            </View>
+            <View style={styles.container12}>
+      <ActivityIndicator size="large" color={Colors.Primary} />
+      <Text style={styles.text12}>Please wait...</Text>
+    </View>
         );
     }
     return (
@@ -102,8 +103,8 @@ const Main = () => {
             </View>
             </Marquee>
             <View style={styles.container}>
-                <Text style={{fontFamily:'s-bolditalic',fontSize:30,marginTop:10,margin:'3%',textAlign:'center'}}>SoulStretch 💫🧘 | Find Balance, Build Strength & Awaken Calm!</Text>
-                <Text style={{fontFamily:'s',fontSize:20,margin:'3%',textAlign:'center'}}>Balance your mind, strengthen your body, and follow your progress. 🌼✨</Text>
+                <Text style={{fontFamily:'s-bolditalic',fontSize:20,marginTop:10,margin:'3%',textAlign:'center'}}>SoulStretch 💫🧘 | Find Balance, Build Strength & Awaken Calm!</Text>
+                <Text style={{fontFamily:'s',fontSize:15,margin:'1%',textAlign:'center',marginBottom:'2%'}}>Balance your mind, strengthen your body, and follow your progress. 🌼✨</Text>
                 <SignedOut>
                 <TouchableOpacity onPress={signInWithGoogle} style={{width:'100%',height:'100%',display:'flex',alignItems:'center',}}>
                     <View  style={styles.buttonContainer}>
@@ -125,6 +126,18 @@ const Main = () => {
 }
 
 const styles = StyleSheet.create({
+    container12: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  text12: {
+    marginTop: 15,
+    fontSize: 16,
+    color: 'black',
+    fontFamily: 's-bolditalic',
+  },
     image:{
         height:160,
         width:160,
