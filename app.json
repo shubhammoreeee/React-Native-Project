@@ -5,9 +5,11 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/22j.png",
+    "assetBundlePatterns": ["**/*"],
     "scheme": "recipekartai",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "runtimeVersion": { "policy": "sdkVersion" },
     "ios": {
       "supportsTablet": true
     },
