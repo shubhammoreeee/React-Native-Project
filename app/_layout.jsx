@@ -4,8 +4,10 @@ import { StackScreen } from "react-native-screens";
 import { ClerkProvider, SignedIn, SignedOut, useOAuth } from "@clerk/clerk-expo";
 import { useAuth } from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
+import * as SecureStore from "expo-secure-store";
+import { tokenCache } from "@clerk/clerk-expo/dist/cache";
 
-const clerkKey = "pk_test_bWFqb3ItYXNwLTQ5LmNsZXJrLmFjY291bnRzLmRldiQ";
+const clerkKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY || "pk_test_bWFqb3ItYXNwLTQ5LmNsZXJrLmFjY291bnRzLmRldiQ";
 
 export default function RootLayout() {
 
@@ -17,7 +19,13 @@ export default function RootLayout() {
   });
   return (
     
-        <ClerkProvider publishableKey={clerkKey}>
+        <ClerkProvider 
+        publishableKey={clerkKey}
+        tokenCache={tokenCache({
+        getToken: (key) => SecureStore.getItemAsync(key),
+        saveToken: (key, value) => SecureStore.setItemAsync(key, value),
+      })}
+    >
 
     <Stack>
       <Stack.Screen name="Landing" 

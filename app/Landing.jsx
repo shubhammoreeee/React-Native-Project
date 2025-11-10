@@ -1,4 +1,5 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native'
+import * as WebBrowser from "expo-web-browser";
 import React from 'react'
 import { SafeAreaView } from "react-native-safe-area-context";
 import {Marquee} from '@animatereactnative/marquee'
@@ -10,8 +11,9 @@ import { useAuth } from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
 import { AntDesign } from '@expo/vector-icons';
 
-const clerkKey = "pk_test_bWFqb3ItYXNwLTQ5LmNsZXJrLmFjY291bnRzLmRldiQ";
+WebBrowser.maybeCompleteAuthSession();
 
+const clerkKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY || "pk_test_bWFqb3ItYXNwLTQ5LmNsZXJrLmFjY291bnRzLmRldiQ";
 export default function Landing() {
     return (
         <Main/>

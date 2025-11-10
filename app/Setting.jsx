@@ -18,7 +18,7 @@ import * as Linking from "expo-linking";
 import { useUser } from "@clerk/clerk-expo";
 import { Share } from "react-native";
 
-const clerkKey = "pk_test_bWFqb3ItYXNwLTQ5LmNsZXJrLmFjY291bnRzLmRldiQ";
+const clerkKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY || "pk_test_bWFqb3ItYXNwLTQ5LmNsZXJrLmFjY291bnRzLmRldiQ";
 
 export default function Profile() {
     return (
