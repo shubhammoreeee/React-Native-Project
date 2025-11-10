@@ -11,7 +11,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Redirect href={('/Home')} />
+      <Redirect href={('/Landing')} />
     </View>
   );
 }
