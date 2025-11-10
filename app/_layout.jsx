@@ -22,8 +22,8 @@ export default function RootLayout() {
         <ClerkProvider 
         publishableKey={clerkKey}
         tokenCache={tokenCache({
-        getToken: (key) => SecureStore.getItemAsync(key),
-        saveToken: (key, value) => SecureStore.setItemAsync(key, value),
+        getToken: SecureStore.getItemAsync,
+        saveToken: SecureStore.setItemAsync,
       })}
     >
 
