@@ -60,7 +60,7 @@ export default Trainer
 
 const styles = StyleSheet.create({
     container: {
-        paddingBottom: 0,
+        paddingBottom: 20,
         flexGrow: 1,
         backgroundColor: '#fff' 
     },

@@ -6,6 +6,8 @@ import Header from '../../components/Header'
 import { FontAwesome } from '@expo/vector-icons';
 import { Redirect, router } from 'expo-router';
 import { openURL } from 'expo-linking';
+import { Dimensions } from 'react-native';
+const { height, width } = Dimensions.get('window');
 
 const Home = () => {
   const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -44,13 +46,13 @@ const Home = () => {
     ? styles.inverted
     : styles.normal;
   return (
-    <GestureHandlerRootView>
-    <SafeAreaView>
+    <GestureHandlerRootView style={{flex:1}}>
+    <SafeAreaView style={{flex:1}}>
     <ScrollView contentContainerStyle={{height:'100%',width:'100%',paddingBottom:'20%'}}>
       <Header/>
       <View style={{display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
         <View style={styles.intro}>
-          <View style={{display:'flex',flexDirection:'col',marginHorizontal:'5%',gap:0}}>
+          <View style={{display:'flex',flexDirection:'column',marginHorizontal:'5%',gap:0}}>
             <Text style={{fontFamily:'s-bold',fontSize:38,marginTop:'2%'}}>Daily</Text>
             <Text style={{fontFamily:'s-bold',fontSize:38,marginTop:'-8%'}}>challenge</Text>
             <Text style={{fontFamily:'s',fontSize:14,marginTop:'%'}}>Do your plan before 09:00 Am</Text>
@@ -83,7 +85,7 @@ const Home = () => {
       horizontal={true} // enables horizontal scrolling
       showsHorizontalScrollIndicator={false} // hides scroll bar
       style={styles.calenderContainer}
-      contentContainerStyle={{ paddingRight: '45%' }} 
+      contentContainerStyle={{ paddingRight: 65 }} 
     >
         <View style={styles.calender}>
           <Text style={styles.textcalen1}></Text>
@@ -121,7 +123,7 @@ const Home = () => {
           <Text style={styles.textcalen}>{tomorrowInfo2.dateNumber}</Text>
         </View>
       </ScrollView>
-      <View>
+      <View style={{height:height*0.4}}>
         <Text style={{margin:'5%',fontFamily:'s-bolditalic',fontSize:28,marginBottom:'-3%'}}>Your Plan</Text>
         <View style={styles.container}>
       <View style={[styles.gridItem, styles.item1]}>
@@ -173,13 +175,15 @@ export default Home
 
 const styles = StyleSheet.create({
   intro:{
-    height:'55%',
-    width:'92%',
+    // height:'55%',
+    // width:'92%',
+    width: width * 0.9,
+    height: height * 0.25,
     backgroundColor:'#a78dfcff',
     borderRadius:'10%',
     display:'flex',
     flexDirection:'row',
-    marginTop:'-10%',
+    marginTop: 80,
   },
   image:{
         height:'20%',
@@ -210,15 +214,15 @@ const styles = StyleSheet.create({
       top:'-15%'
   },
   calender:{
-    height:'100%',
-    width:'18%',
+    height:height * 0.11,
+    width:width * 0.15,
     backgroundColor:'white',
     padding:10,
     borderRadius:25,
     borderWidth:0.5,
     borderColor:'gray',
     overflow:'hidden',
-    marginHorizontal:'2%'
+    marginHorizontal:'1%'
   },
   textcalen:{
     textAlign:'center'
@@ -246,7 +250,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     gap:5,
     marginHorizontal:15,
-    marginTop:'-20%'
+    marginTop: 10
   },
   container: {
     flexDirection: 'row',
@@ -291,7 +295,7 @@ const styles = StyleSheet.create({
         display:'flex',
         flexDirection:'row',
         justifyContent:'space-between',
-        marginVertical:'15',
+        marginVertical:15,
         marginBottom:'-10%',
         gap:8
     },
@@ -302,3 +306,295 @@ const styles = StyleSheet.create({
       backgroundColor:'white'
     }
 })
+// import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'react-native';
+// import React from 'react';
+// import { SafeAreaView } from 'react-native-safe-area-context';
+// import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+// import Header from '../../components/Header';
+// import { FontAwesome } from '@expo/vector-icons';
+// import { openURL } from 'expo-linking';
+
+// const { height, width } = Dimensions.get('window');
+
+// const Home = () => {
+//   const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+//   const today = new Date();
+
+//   const getDayInfo = (offset) => {
+//     const date = new Date(today);
+//     date.setDate(today.getDate() + offset);
+//     return {
+//       dateNumber: date.getDate(),
+//       dayName: weekDays[date.getDay()],
+//     };
+//   };
+
+//   const days = [
+//     getDayInfo(-3),
+//     getDayInfo(-2),
+//     getDayInfo(-1),
+//     getDayInfo(0),
+//     getDayInfo(1),
+//     getDayInfo(2),
+//     getDayInfo(3),
+//   ];
+
+//   return (
+//     <GestureHandlerRootView style={{ flex: 1 }}>
+//       <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+//         <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+//           <Header/>
+
+//           {/* Daily Challenge Box */}
+//           <View style={styles.center}>
+//             <View style={styles.intro}>
+//               <View style={styles.introTextContainer}>
+//                 <Text style={styles.title}>Daily</Text>
+//                 <Text style={styles.title}>Challenge</Text>
+//                 <Text style={styles.subtitle}>Do your plan before 09:00 AM</Text>
+
+//                 <View style={styles.avatarRow}>
+//                   <Image source={require('./../../assets/images/i4j.png')} style={styles.image} />
+//                   <Image source={require('./../../assets/images/i4.png')} style={styles.imageOverlap} />
+//                   <Image source={require('./../../assets/images/i4j.png')} style={styles.imageOverlap} />
+//                   <Image source={require('./../../assets/images/i4.png')} style={styles.imageOverlap} />
+//                 </View>
+//               </View>
+
+//               <Image
+//                 source={require('./../../assets/images/logo1j.png')}
+//                 style={styles.sideImage}
+//                 resizeMode="contain"
+//               />
+//             </View>
+//           </View>
+
+//           {/* Calendar Section */}
+//           <ScrollView
+//             horizontal
+//             showsHorizontalScrollIndicator={false}
+//             style={styles.calendarScroll}
+//             contentContainerStyle={{ paddingHorizontal: 20 }}
+//           >
+//             {days.map((d, i) => (
+//               <View
+//                 key={i}
+//                 style={[
+//                   styles.calendarCard,
+//                   i === 3 && styles.activeCalendar, // today
+//                 ]}
+//               >
+//                 <Text style={[styles.dayName, i === 3 && styles.activeText]}>{d.dayName}</Text>
+//                 <Text style={[styles.dayNumber, i === 3 && styles.activeText]}>{d.dateNumber}</Text>
+//               </View>
+//             ))}
+//           </ScrollView>
+
+//           {/* Your Plan Section */}
+//           <View>
+//             <Text style={styles.planTitle}>Your Plan</Text>
+
+//             <View style={styles.planContainer}>
+//               {/* Card 1 */}
+//               <View style={[styles.planCard, styles.item1]}>
+//                 <Text style={styles.levelTag}>Medium</Text>
+//                 <View>
+//                   <Text style={styles.planHeading}>Yoga Group</Text>
+//                   <Text>25 Nov.</Text>
+//                   <Text>14:00 - 15:00</Text>
+//                   <Text>A5 room</Text>
+//                 </View>
+//                 <View style={styles.trainerRow}>
+//                   <Image
+//                     source={require('./../../assets/images/i4.png')}
+//                     style={styles.trainerImage}
+//                   />
+//                   <View>
+//                     <Text style={{ fontFamily: 's', fontSize: 12 }}>Trainer</Text>
+//                     <Text style={{ fontFamily: 's-bolditalic', fontSize: 14 }}>Tiffany Way</Text>
+//                   </View>
+//                 </View>
+//               </View>
+
+//               {/* Card 2 */}
+//               <View style={[styles.planCard, styles.item2]}>
+//                 <Text style={styles.levelTagSmall}>Light</Text>
+//                 <View>
+//                   <Text style={[styles.planHeading, { marginTop: 10 }]}>Balance</Text>
+//                   <Text>28 Nov.</Text>
+//                   <Text>18:00 - 19:30</Text>
+//                   <Text>A2 room</Text>
+//                 </View>
+//               </View>
+
+//               {/* Social Card */}
+//               <View style={[styles.planCard, styles.item3]}>
+//                 <TouchableOpacity onPress={() => openURL('https://instagram.com')}>
+//                   <FontAwesome name="instagram" size={24} color="black" style={styles.icon} />
+//                 </TouchableOpacity>
+//                 <TouchableOpacity onPress={() => openURL('https://youtube.com')}>
+//                   <FontAwesome name="youtube-play" size={22} color="black" style={styles.icon} />
+//                 </TouchableOpacity>
+//                 <TouchableOpacity onPress={() => openURL('https://x.com')}>
+//                   <FontAwesome name="twitter" size={22} color="black" style={styles.icon} />
+//                 </TouchableOpacity>
+//               </View>
+//             </View>
+//           </View>
+//         </ScrollView>
+//       </SafeAreaView>
+//     </GestureHandlerRootView>
+//   );
+// };
+
+// export default Home;
+
+// const styles = StyleSheet.create({
+//   center: {
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   intro: {
+//     width: width * 0.92,
+//     height: height * 0.28,
+//     backgroundColor: '#a78dfcff',
+//     borderRadius: 20,
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     paddingHorizontal: 20,
+//     marginTop: 10,
+//   },
+//   introTextContainer: {
+//     flex: 1,
+//   },
+//   title: {
+//     fontFamily: 's-bold',
+//     fontSize: 32,
+//     lineHeight: 36,
+//     color: '#fff',
+//   },
+//   subtitle: {
+//     fontFamily: 's',
+//     fontSize: 14,
+//     color: '#f9f9f9',
+//     marginTop: 5,
+//   },
+//   avatarRow: {
+//     flexDirection: 'row',
+//     marginTop: 10,
+//   },
+//   image: {
+//     height: 40,
+//     width: 40,
+//     borderRadius: 20,
+//   },
+//   imageOverlap: {
+//     height: 40,
+//     width: 40,
+//     borderRadius: 20,
+//     marginLeft: -10,
+//   },
+//   sideImage: {
+//     height: height * 0.25,
+//     width: width * 0.35,
+//   },
+//   calendarScroll: {
+//     marginTop: 25,
+//   },
+//   calendarCard: {
+//     width: 65,
+//     height: height * 0.6,
+//     borderRadius: 20,
+//     borderWidth: 0.6,
+//     borderColor: '#ccc',
+//     backgroundColor: '#fff',
+//     marginHorizontal: 8,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   activeCalendar: {
+//     backgroundColor: '#000',
+//   },
+//   dayName: {
+//     fontFamily: 's-medium',
+//     fontSize: 12,
+//     color: 'gray',
+//   },
+//   dayNumber: {
+//     fontFamily: 's-bold',
+//     fontSize: 20,
+//     color: 'black',
+//   },
+//   activeText: {
+//     color: '#fff',
+//   },
+//   planTitle: {
+//     fontFamily: 's-bolditalic',
+//     fontSize: 26,
+//     marginHorizontal: 20,
+//     marginVertical: 10,
+//   },
+//   planContainer: {
+//     flexDirection: 'row',
+//     flexWrap: 'wrap',
+//     justifyContent: 'space-between',
+//     paddingHorizontal: 15,
+//   },
+//   planCard: {
+//     borderRadius: 15,
+//     marginBottom: 15,
+//     padding: 15,
+//   },
+//   item1: {
+//     backgroundColor: '#fab906ff',
+//     width: '47%',
+//   },
+//   item2: {
+//     backgroundColor: '#81c6fbff',
+//     width: '47%',
+//   },
+//   item3: {
+//     backgroundColor: '#e2aaf9ff',
+//     width: '47%',
+//     flexDirection: 'row',
+//     justifyContent: 'space-around',
+//     alignItems: 'center',
+//   },
+//   planHeading: {
+//     fontFamily: 's-bold',
+//     fontSize: 18,
+//   },
+//   levelTag: {
+//     backgroundColor: '#ffffff7c',
+//     borderRadius: 15,
+//     paddingHorizontal: 10,
+//     paddingVertical: 4,
+//     alignSelf: 'flex-start',
+//     marginBottom: 10,
+//   },
+//   levelTagSmall: {
+//     backgroundColor: '#ffffff7c',
+//     borderRadius: 15,
+//     paddingHorizontal: 8,
+//     paddingVertical: 4,
+//     alignSelf: 'flex-start',
+//     marginBottom: 8,
+//   },
+//   trainerRow: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     marginTop: 10,
+//     gap: 10,
+//   },
+//   trainerImage: {
+//     height: 35,
+//     width: 35,
+//     borderRadius: 20,
+//   },
+//   icon: {
+//     backgroundColor: 'white',
+//     padding: 8,
+//     borderRadius: 99,
+//     borderWidth: 0.5,
+//   },
+// });
